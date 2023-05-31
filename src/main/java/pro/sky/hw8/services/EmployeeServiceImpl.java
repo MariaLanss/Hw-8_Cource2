@@ -1,8 +1,10 @@
 package pro.sky.hw8.services;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.hw8.DepartmentNotFoundException;
 import pro.sky.hw8.EmployeeNotFoundException;
+import pro.sky.hw8.EmployeeWrongDataException;
 import pro.sky.hw8.models.Employee;
 import pro.sky.hw8.EmployeeAlreadyAddedException;
 
@@ -39,10 +41,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee add(String firstName, String lastName, int department, int salary){
-        if (department < 1 || department > 5){
+        if (!StringUtils.isAlpha(firstName) && StringUtils.isAlpha(lastName)){
+            throw new EmployeeWrongDataException();
+        }
+        if (department < 1 || department > 5) {
             throw new DepartmentNotFoundException(department);
         }
-        Employee employee = new Employee(firstName, lastName, department, salary);
+        Employee employee = new Employee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName),
+                department, salary);
         String key = generateKey(employee);
         if (employees.containsKey(key)){
             throw new EmployeeAlreadyAddedException();

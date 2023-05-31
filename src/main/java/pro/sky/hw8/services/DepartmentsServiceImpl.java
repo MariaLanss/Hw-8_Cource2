@@ -1,6 +1,7 @@
-package pro.sky.hw8;
+package pro.sky.hw8.services;
 
 import org.springframework.stereotype.Service;
+import pro.sky.hw8.DepartmentNotFoundException;
 import pro.sky.hw8.models.Employee;
 import pro.sky.hw8.services.DepartmentService;
 import pro.sky.hw8.services.EmployeeService;
